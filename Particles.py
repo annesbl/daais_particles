@@ -1,54 +1,59 @@
-import random 
+import random
+import numpy as np  
 
 class Particle:
-    def __init__(self, position, velocity, particle_type, color):
+    def __init__(self, position, velocity, particle_type, color=None, max_influence=100):
         """
         Initialize a single particle.
 
         Parameters:
         - position (list): [x, y] coordinates of the particle.
         - velocity (list): [vx, vy] velocity of the particle.
-        - particle_type (str): Type of the particle. (4 typen)
+        - particle_type (str): Type of the particle.
         - color (tuple): RGB color representing the particle type.
+        - max_influence (int): Maximum influence range of the particle.
         """
-        self.position = position
-        self.velocity = velocity
+        self.position = np.array(position, dtype=float)  # Using numpy for array operations
+        self.velocity = np.array(velocity, dtype=float)  # Using numpy for array operations
         self.particle_type = particle_type
         self.color = color
-        
+        self.max_influence = max_influence
+
     def move(self, boundary, friction):
         """
         Update the particle's position based on its velocity and enforce boundary conditions.
         Apply friction to reduce velocity over time.
         """
-        self.position[0] += self.velocity[0]
-        self.position[1] += self.velocity[1]
+        self.position += self.velocity
 
         # Reflect the particle if it hits the boundary
-        # code hier
+        if self.position[0] < 0 or self.position[0] > boundary[0]:
+            self.velocity[0] = -self.velocity[0]
+        if self.position[1] < 0 or self.position[1] > boundary[1]:
+            self.velocity[1] = -self.velocity[1]
 
         # Apply friction
-        # code hier 
-    
+        self.velocity *= (1 - friction)
+
         # Keep the particle within bounds
-        # code hier 
+        self.position[0] = max(0, min(self.position[0], boundary[0]))
+        self.position[1] = max(0, min(self.position[1], boundary[1]))
 
     def apply_noise(self, noise_strength):
         """
         Apply random noise to the particle's velocity.
         """
-        pass
-
+        self.velocity += np.random.uniform(-noise_strength, noise_strength, size=2)
 
     def serialize(self):
         """
         Serialize the particle's data to a dictionary for saving or loading.
         """
         return {
-            "position": self.position,
-            "velocity": self.velocity,
+            "position": self.position.tolist(),
+            "velocity": self.velocity.tolist(),
             "particle_type": self.particle_type,
-            "color": self.color
+            "color": self.color,
         }
 
     @classmethod
@@ -57,74 +62,3 @@ class Particle:
         Create a particle instance from serialized data.
         """
         return cls(data["position"], data["velocity"], data["particle_type"], data["color"])
- 
-
-class ParticleSystem:
-    def __init__(self, particle_count, boundary, types):
-        """
-        Initialize a particle system with multiple particles.
-
-        Parameters:
-        - particle_count (int): Number of particles to initialize.
-        - boundary (tuple): Size of the simulation area (width, height).
-        - types (dict): Dictionary of particle types and their colors.
-        - interaction_matrix (dict): Matrix defining interactions between particle types.
-        """
-        self.particles = self.initialize_particles(particle_count, boundary, types)
-        self.boundary = boundary
-        self.types = types
-        self.interaction_matrix = interaction_matrix
-
-    def initialize_particles(self, count, boundary, types):
-        """
-        Initialize multiple particles with random attributes.
-
-        Returns:
-        - list: A list of Particle instances.
-        """
-        pass
-
-    def apply_interactions(self, interaction_strength, influence_range):
-        """
-        Apply interactions between particles based on their types and distances.
-        """
-        pass
-    
-        # Calculate the distance
-        # code hier 
-            
-        # Skip if particles are outside the influence range
-        # code hier 
-
-        # Get the interaction value from the matrix
-        # code hier
-            
-        # Apply forces based on interaction
-        # code hier 
-
-    def update(self, noise_strength, interaction_strength, influence_range, friction):
-        """
-        Update all particles for one simulation step.
-        - Apply interactions.
-        - Apply random noise.
-        - Move particles based on their velocities.
-        """
-        pass
-
-    def visualize(self, screen):
-        """
-        Visualize all particles on the screen.
-        """
-        pass
-
-    def serialize_particles(self):
-        """
-        Serialize all particles in the system for saving.
-        """
-        pass
-
-    def deserialize_particles(self, serialized_particles):
-        """
-        Deserialize particle data and recreate the particle system.
-        """
-        pass 
