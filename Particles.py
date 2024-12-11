@@ -8,7 +8,7 @@ class Particle:
         Parameters:
         - position (list): [x, y] coordinates of the particle.
         - velocity (list): [vx, vy] velocity of the particle.
-        - particle_type (str): Type of the particle.
+        - particle_type (str): Type of the particle. (4 typen)
         - color (tuple): RGB color representing the particle type.
         """
         self.position = position
@@ -27,11 +27,9 @@ class Particle:
         # Reflect the particle if it hits the boundary
         # code hier
 
-
         # Apply friction
         # code hier 
     
-
         # Keep the particle within bounds
         # code hier 
 
@@ -62,7 +60,7 @@ class Particle:
  
 
 class ParticleSystem:
-    def __init__(self, particle_count, boundary, types, interaction_matrix):
+    def __init__(self, particle_count, boundary, types):
         """
         Initialize a particle system with multiple particles.
 
