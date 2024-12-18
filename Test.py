@@ -5,7 +5,7 @@ from matrix import InteractionMatrix
 from board import Board
 
 # Simulation parameters
-particle_count = 100
+particle_count = 100  
 boundary = (800, 600)  # Width, Height
 particle_types = {
     "A": (255, 0, 0),   # Red
@@ -30,7 +30,7 @@ while running:
             running = False
 
     # Update particles
-    particle_system.update(noise_strength=0.2, interaction_strength=0.1, friction=0.01)
+    particle_system.update(noise_strength=0.2, interaction_strength=0.5, influence_range=100, friction=0.01)
 
     # Draw particles
     board.draw_particles(particle_system.particles)
