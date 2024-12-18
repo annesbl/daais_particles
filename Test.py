@@ -1,42 +1,39 @@
 import pygame
 from Particles import Particle
 from Particle_System import ParticleSystem
+from matrix import InteractionMatrix
+from board import Board
 
-# Define particle types and interaction matrix
-particle_types = {
-    'A': (255, 0, 0),   # Red
-    'B': (0, 255, 0),   # Green
-    'C': (0, 0, 255),   # Blue
-    'D': (255, 255, 0), # Yellow
-}
-
-interaction_matrix = {
-    'A': {'A': 0, 'B': 1, 'C': -1, 'D': 0.5},
-    'B': {'A': -1, 'B': 0, 'C': 1, 'D': -0.5},
-    'C': {'A': 1, 'B': -1, 'C': 0, 'D': 0.2},
-    'D': {'A': -0.5, 'B': 0.5, 'C': -0.2, 'D': 0},
-}
-
-# Initialize particle system
+# Simulation parameters
 particle_count = 100
-boundary = (800, 600)
-system = ParticleSystem(particle_count, boundary, particle_types, interaction_matrix)
+boundary = (800, 600)  # Width, Height
+particle_types = {
+    "A": (255, 0, 0),   # Red
+    "B": (0, 255, 0),   # Green
+    "C": (0, 0, 255),   # Blue
+    "D": (255, 255, 0)  # Yellow
+}
 
-# Initialize pygame
+# Initialize InteractionMatrix
+interaction_matrix = InteractionMatrix(list(particle_types.keys()))
+
+# Initialize Particle System and Board
+particle_system = ParticleSystem(particle_count, boundary, particle_types, interaction_matrix)
+board = Board(boundary[0], boundary[1])
+
+# Main simulation loop
 pygame.init()
-screen = pygame.display.set_mode(boundary)
-clock = pygame.time.Clock()
-
-# Run the simulation
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    system.update(noise_strength=0.2, interaction_strength=0.5, influence_range=50, friction=0.01)
-    system.visualize(screen)
-    clock.tick(60)  # Limit to 60 FPS
+    # Update particles
+    particle_system.update(noise_strength=0.2, interaction_strength=0.1, friction=0.01)
+
+    # Draw particles
+    board.draw_particles(particle_system.particles)
+    board.update_display()
 
 pygame.quit()
-
