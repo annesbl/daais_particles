@@ -15,3 +15,11 @@ class TestParticleSystem(unittest.TestCase):
         initial_velocity = self.system.particles[0].velocity.copy()
         self.system.apply_interactions(interaction_strength=0.1, influence_range=50)
         self.assertFalse((self.system.particles[0].velocity == initial_velocity).all())
+    def test_update(self):
+        initial_positions = [p.position.copy() for p in self.system.particles]
+        self.system.update(noise_strength=0.1, interaction_strength=0.1, influence_range=50, friction=0.01)
+        for i, particle in enumerate(self.system.particles):
+            self.assertFalse((particle.position == initial_positions[i]).all())
+
+if __name__ == "__main__":
+    unittest.main()
