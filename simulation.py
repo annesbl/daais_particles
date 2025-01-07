@@ -16,3 +16,14 @@ class Simulation:
         )
         
         self.board = Board(width, height)
+        
+def run(self):
+    while self.running:
+            self.handle_events()
+            self.update()
+            self.render()
+            
+def handle_events(self):
+    for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
