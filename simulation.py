@@ -5,3 +5,14 @@ from InteractionMatrix import InteractionMatrix
 
 class Simulation:
     def __init__(self, width, height, particle_count, particle_types):
+        self.width = width
+        self.height = height
+        self.running = True
+        
+        self.interaction_matrix = InteractionMatrix(particle_types)
+        
+        self.particle_system = ParticleSystem(
+            particle_count, (width, height), {ptype: None for ptype in particle_types}, self.interaction_matrix
+        )
+        
+        self.board = Board(width, height)
