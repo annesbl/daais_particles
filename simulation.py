@@ -36,3 +36,14 @@ def update(self):
 def render(self):
     self.board.draw_particles(self.particle_system.particles)
     self.board.update_display()
+
+
+if __name__ == "__main__":
+    # Simulation parameters
+    WIDTH, HEIGHT = 800, 600
+    PARTICLE_COUNT = 500
+    PARTICLE_TYPES = ["A", "B", "C", "D"]
+
+    # Initialize and run the simulation
+    simulation = Simulation(WIDTH, HEIGHT, PARTICLE_COUNT, PARTICLE_TYPES)
+    simulation.run()
