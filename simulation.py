@@ -27,3 +27,12 @@ def handle_events(self):
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+                
+def update(self):
+    self.particle_system.update(
+            noise_strength=0.1, interaction_strength=0.5, influence_range=50, friction=0.01
+        )
+    
+def render(self):
+    self.board.draw_particles(self.particle_system.particles)
+    self.board.update_display()
