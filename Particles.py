@@ -2,7 +2,7 @@ import random
 import numpy as np
 
 class Particle:
-    def __init__(self, position, velocity, particle_type, color=None, max_influence=100):
+    def __init__(self, position, velocity, particle_type, color=None, max_influence=100, size=5):
         """
         Initialize a single particle.
 
@@ -18,21 +18,19 @@ class Particle:
         self.particle_type = particle_type
         self.color = color  # RGB color
         self.max_influence = max_influence  # Influence range for interaction matrix
+        self.size = size
 
     def move(self, boundary, friction):
-        """
-        Update particle position based on velocity, enforce boundaries, and apply friction.
-        """
+        # Update position
         self.position += self.velocity
 
-        # Boundary reflections
-        for i in range(2):  # 0: x-axis, 1: y-axis
-            if self.position[i] < 0 or self.position[i] > boundary[i]:
-                self.velocity[i] = -self.velocity[i]
-                self.position[i] = max(0, min(self.position[i], boundary[i]))
+        # Apply toroidal wrapping
+        self.position[0] %= boundary[0]  # Wrap X-coordinate
+        self.position[1] %= boundary[1]  # Wrap Y-coordinate
 
-        # Apply friction to reduce velocity
+        # Apply friction
         self.velocity *= (1 - friction)
+
 
     def apply_noise(self, noise_strength):
         """
@@ -57,3 +55,11 @@ class Particle:
         Create a particle instance from serialized data.
         """
         return cls(data["position"], data["velocity"], data["particle_type"], data["color"])
+
+    def draw_particles_with_trails(self, particles):
+        self.trail_surface.fill((0, 0, 0, 10))  # Use semi-transparent surface
+        for particle in particles:
+            x, y = int(particle.position[0]) % self.width, int(particle.position[1]) % self.height
+            pygame.draw.circle(self.trail_surface, particle.color, (x, y), particle.size)
+        self.screen.blit(self.trail_surface, (0, 0))
+

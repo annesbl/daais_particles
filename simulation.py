@@ -30,13 +30,12 @@ class Simulation:
                 
     def update(self):
         self.particle_system.update(
-            noise_strength=0.1, interaction_strength=0.5, influence_range=50, friction=0.01
+            noise_strength=0.1, influence_range=50, friction=0.01
         )
     
     def render(self):
-        self.board.draw_particles(self.particle_system.particles)
+        self.board.draw_particles_with_trails(self.particle_system.particles)
         self.board.update_display()
-
 
 if __name__ == "__main__":
     # Simulation parameters

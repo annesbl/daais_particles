@@ -2,7 +2,7 @@ import random
 import pygame
 import numpy as np
 from Particles import Particle
-from interaction_class import KDTree, Interactions, Implementation
+from interaction_class import KDTree, Implementation
 
 class ParticleSystem:
     def __init__(self, particle_count, boundary, types, interaction_matrix):
@@ -33,18 +33,31 @@ class ParticleSystem:
             particles.append(Particle(position, velocity, particle_type, color))
         return particles
 
-    def update(self, noise_strength=0.1, interaction_strength=0.5, influence_range=50, friction=0.01):
+    def update(self, noise_strength=0.1, influence_range=50, friction=0.01):
         """
-        Update all particles for one time step.
-        """
-        # Use the KDTree and Interactions to handle particle updates
-        particle_positions = [particle.position for particle in self.particles]
-        tree = KDTree.initialise_tree(particle_positions)
+        Update particles by applying interactions and noise.
 
+        Parameters:
+        - noise_strength (float): Random noise added to particle velocity.
+        - influence_range (float): Maximum distance for particle interaction.
+        - friction (float): Friction applied to particle movement.
+        """
+        # Extract particle positions for KDTree
+        particle_positions = [particle.position for particle in self.particles]
+
+        # Build KDTree for neighbor searches
+        kdtree = KDTree.initialise_tree(particle_positions)
+
+        # Use the Implementation class to update particles
         self.particles = Implementation.update_particles(
-            tree, influence_range, self.particles, self.interaction_matrix, self.boundary, friction
+            tree=kdtree,
+            influence_range=influence_range,
+            particles=self.particles,
+            interaction_matrix=self.interaction_matrix,
+            sim_area=self.boundary,
+            friction=friction
         )
 
-        # Apply noise to particles after interactions
+        # Apply random noise to all particles
         for particle in self.particles:
             particle.apply_noise(noise_strength)
