@@ -10,7 +10,7 @@ from interaction_class import KDTree, Interactions, Implementation
 def main():
     # Define Simulation Parameters
     WIDTH, HEIGHT = 900, 700
-    PARTICLE_COUNT = 100  # Reduced particle count for testing
+    PARTICLE_COUNT = 1000  # Reduced particle count for testing
     PARTICLE_TYPES = ["A", "B", "C", "D"]  # Define particle types
     
     # Initialize Simulation
