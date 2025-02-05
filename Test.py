@@ -3,16 +3,8 @@ from Particles import Particle
 from Particle_System import ParticleSystem
 from matrix import InteractionMatrix
 from board import Board
+from simulation import Simulation 
 
-# Simulation parameters
-particle_count = 100  
-boundary = (800, 600)  # Width, Height
-particle_types = {
-    "A": (255, 0, 0),   # Red
-    "B": (0, 255, 0),   # Green
-    "C": (0, 0, 255),   # Blue
-    "D": (255, 255, 0)  # Yellow
-}
 
 # Initialize InteractionMatrix
 interaction_matrix = InteractionMatrix(list(particle_types.keys()))
