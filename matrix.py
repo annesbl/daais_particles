@@ -1,15 +1,30 @@
 import numpy as np
 
 class InteractionMatrix:
-    def __init__(self, types):   #initialisiert interaktionsmatrix
+    def __init__(self, types, custom_rules=None):   #initialisiert interaktionsmatrix
         self.types = types  #liste der Partikeltypen (diese typen definieren dimensionen der matrix)
         self.matrix = self._initialize_matrix()   #erstellt und speichert matrix mit zufälligen wertenzw -1 und 1
+
+        if custom_rules:
+            self._apply_custom_rules(custom_rules)  # Apply custom rules if provided
 
     def _initialize_matrix(self):   #erstellt quadratische matrix basierend auf anzahl der typen (jeder eintrag repräsentiert stärke der interaktion zw typen)
        
         size = len(self.types)   #größe der matrix = anzahl der typen
         return np.random.uniform(-1, 1, (size, size))  #Erstellt eine quadratische Matrix der Größe (size x size) mit zufälligen Werten im Bereich [-1, 1].
                                                        #Positive Werte bedeuten Anziehung, negative Abstoßung.
+
+    def _apply_custom_rules(self, custom_rules):
+        """
+        Apply custom interaction rules to the interaction matrix.
+        
+        Parameters:
+        - custom_rules (dict): Custom rules where keys are (type1, type2) tuples and values are strengths.
+        """
+        for (type1, type2), strength in custom_rules.items():
+            idx1 = self.types.index(type1)
+            idx2 = self.types.index(type2)
+            self.matrix[idx1, idx2] = strength
 
     def get_interaction(self, type1, type2):   #gibt interaktionsstrke zw zwei typen zurück
         

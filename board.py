@@ -36,22 +36,7 @@ class Board:
             "D": (255, 255, 0)  # Yellow
         }
         return colors.get(particle_type, (255, 255, 255))  # gibt farbe des partikels zurück, wenn der typ nicht in der liste ist, wird weiß zurückgegeben
-
-    '''
-    def draw_particles(self, particles):
-        # Draw a semi-transparent background to create trails
-        overlay = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        overlay.fill((0, 0, 0, 10))  # Last value is alpha transparency
-        self.screen.blit(overlay, (0, 0))
     
-        for particle in particles:
-            x, y = int(particle.position[0]), int(particle.position[1])
-            color = self.get_color_by_type(particle.particle_type)
-            pygame.draw.circle(self.screen, color, (x, y), 3)
-
-        pygame.display.flip()
-    '''
-
     def draw_particles_with_trails(self, particles):
         # Make the trail fade gradually
         self.trail_surface.fill((0, 0, 0, 10))  # Semi-transparent black overlay
@@ -61,6 +46,8 @@ class Board:
             pygame.draw.circle(self.trail_surface, color, (x, y), 3)  # Draw particle with radius 3
         self.screen.blit(self.trail_surface, (0, 0))  # Combine trail surface with the main screen
         pygame.display.flip()
+
+    
 
 
 
