@@ -1,6 +1,6 @@
 import unittest
-from ParticleSystem import ParticleSystem
-from InteractionMatrix import InteractionMatrix
+from Particle_System import ParticleSystem
+from matrix import InteractionMatrix
 
 class TestParticleSystem(unittest.TestCase):
     def setUp(self):
