@@ -72,7 +72,6 @@ class Simulation:
 
 
 if __name__ == "__main__":
-    # Simulation parameters
     WIDTH, HEIGHT = 800, 600
     PARTICLE_COUNT = 500
     PARTICLE_TYPES = ["A", "B", "C", "D"]
@@ -81,5 +80,5 @@ if __name__ == "__main__":
     simulation = Simulation(WIDTH, HEIGHT, PARTICLE_COUNT, PARTICLE_TYPES)
     simulation.run()
 
-    # Quit Pygame
+
     pygame.quit()
