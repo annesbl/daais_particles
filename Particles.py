@@ -31,7 +31,6 @@ class Particle:
         # Apply friction
         self.velocity *= (1 - friction)
 
-
     def apply_noise(self, noise_strength):
         """
         Apply random noise to the particle's velocity.
@@ -56,10 +55,4 @@ class Particle:
         """
         return cls(data["position"], data["velocity"], data["particle_type"], data["color"])
 
-    def draw_particles_with_trails(self, particles):
-        self.trail_surface.fill((0, 0, 0, 10))  # Use semi-transparent surface
-        for particle in particles:
-            x, y = int(particle.position[0]) % self.width, int(particle.position[1]) % self.height
-            pygame.draw.circle(self.trail_surface, particle.color, (x, y), particle.size)
-        self.screen.blit(self.trail_surface, (0, 0))
-
+    

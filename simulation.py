@@ -3,8 +3,8 @@ from Particle_System import ParticleSystem
 from board import Board
 from matrix import InteractionMatrix
 
-class Simulation: 
-    def __init__(self, width, height, particle_count, particle_types, interaction_matrix):
+class Simulation:
+    def __init__(self, width, height, particle_count, particle_types):
         self.width = width
         self.height = height
         self.running = True
@@ -16,45 +16,39 @@ class Simulation:
         )
         
         self.board = Board(width, height)
-        
-    def run(self): 
+
+    def run(self):
+        """ Main simulation loop """
         while self.running:
             self.handle_events()
             self.update()
             self.render()
-            
+
     def handle_events(self):
+        """ Handle Pygame events (e.g., quit) """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
                 
     def update(self):
+        """ Update particle positions and interactions """
         self.particle_system.update(
             noise_strength=0.1, influence_range=50, friction=0.01
         )
     
     def render(self):
-        self.board.draw_particles_with_trails(self.particle_system.particles)
+        """ Render particles on the board """
+        self.board.draw_particles(self.particle_system.particles)
         self.board.update_display()
 
 
+# Ensure the simulation runs when executed directly
 if __name__ == "__main__":
     # Simulation parameters
     WIDTH, HEIGHT = 800, 600
-    PARTICLE_COUNT = 1000
+    PARTICLE_COUNT = 500
     PARTICLE_TYPES = ["A", "B", "C", "D"]
 
-    # Define specific interaction rules
-    custom_rules = {
-        ("A", "B"): 1.0,    # A attracts B
-        ("B", "C"): -1.0,   # B repels C
-        ("C", "D"): 0.5,    # C attracts D
-        ("D", "A"): 0.0,    # D has no interaction with A
-    }
-
-    # Initialize the interaction matrix with custom rules
-    interaction_matrix = InteractionMatrix(PARTICLE_TYPES, custom_rules)
-
     # Initialize and run the simulation
-    simulation = Simulation(WIDTH, HEIGHT, PARTICLE_COUNT, PARTICLE_TYPES, interaction_matrix)
+    simulation = Simulation(WIDTH, HEIGHT, PARTICLE_COUNT, PARTICLE_TYPES)
     simulation.run()

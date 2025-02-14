@@ -1,11 +1,10 @@
 # Test Simulation File
 import pygame
+import numpy as np
 from simulation import Simulation
-from board import Board
-from matrix import InteractionMatrix
 from Particle_System import ParticleSystem
 from Particles import Particle
-from interaction_class import KDTree, Interactions, Implementation
+from matrix import InteractionMatrix
 
 def main():
     # Simulation parameters
@@ -22,14 +21,18 @@ def main():
     }
 
     # Initialize the interaction matrix with custom rules
-    interaction_matrix = InteractionMatrix(PARTICLE_TYPES, custom_rules)
+    interaction_matrix = InteractionMatrix(PARTICLE_TYPES)
+    interaction_matrix.matrix = np.zeros((len(PARTICLE_TYPES), len(PARTICLE_TYPES)))
+    
+    # Assign custom rules
+    for (type1, type2), value in custom_rules.items():
+        idx1 = PARTICLE_TYPES.index(type1)
+        idx2 = PARTICLE_TYPES.index(type2)
+        interaction_matrix.matrix[idx1, idx2] = value
 
-    # Initialize the simulation with the specified parameters
-    simulation = Simulation(WIDTH, HEIGHT, PARTICLE_COUNT, PARTICLE_TYPES, interaction_matrix)
-
-    # Run the simulation
+    # Initialize and run the simulation
+    simulation = Simulation(WIDTH, HEIGHT, PARTICLE_COUNT, PARTICLE_TYPES)
     simulation.run()
 
 if __name__ == "__main__":
     main()
-
