@@ -1,4 +1,3 @@
-import random
 import numpy as np
 
 class Particle:
@@ -16,15 +15,18 @@ class Particle:
         self.position = np.array(position, dtype=float)  # Position as a numpy array
         self.velocity = np.array(velocity, dtype=float)  # Velocity as a numpy array
         self.particle_type = particle_type
-        self.color = color  # RGB color
+        self.color = color if color else (255, 255, 255)  # Default to white if no color is provided
         self.max_influence = max_influence  # Influence range for interaction matrix
         self.size = size
 
     def move(self, boundary, friction):
-        # Update position
+        """
+        Update the particle position and apply friction.
+        Implements toroidal boundary conditions (particles wrap around).
+        """
         self.position += self.velocity
 
-        # Apply toroidal wrapping
+        # Apply toroidal wrapping (particles reappear on the other side)
         self.position[0] %= boundary[0]  # Wrap X-coordinate
         self.position[1] %= boundary[1]  # Wrap Y-coordinate
 
@@ -54,5 +56,3 @@ class Particle:
         Create a particle instance from serialized data.
         """
         return cls(data["position"], data["velocity"], data["particle_type"], data["color"])
-
-    

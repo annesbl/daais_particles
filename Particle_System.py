@@ -1,7 +1,5 @@
-import random
-import pygame
 import numpy as np
-from Particles import Particle
+from particles import Particle
 from interaction_class import KDTree, Implementation
 
 class ParticleSystem:
@@ -29,7 +27,15 @@ class ParticleSystem:
             position = [np.random.uniform(0, boundary[0]), np.random.uniform(0, boundary[1])]
             velocity = [np.random.uniform(-1, 1), np.random.uniform(-1, 1)]
             particle_type = np.random.choice(list(types.keys()))
-            color = types[particle_type]
+            
+            # Assign colors based on particle type
+            color = {
+                "A": (255, 0, 0),  # Red
+                "B": (0, 255, 0),  # Green
+                "C": (0, 0, 255),  # Blue
+                "D": (255, 255, 0)  # Yellow
+            }.get(particle_type, (255, 255, 255))  # Default to white
+
             particles.append(Particle(position, velocity, particle_type, color))
         return particles
 
