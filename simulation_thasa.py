@@ -76,7 +76,7 @@ if __name__ == "__main__":
     PARTICLE_COUNT = 500
     PARTICLE_TYPES = ["A", "B", "C", "D"]
 
-    # Initialize and run the simulation
+
     simulation = Simulation(WIDTH, HEIGHT, PARTICLE_COUNT, PARTICLE_TYPES)
     simulation.run()
 
