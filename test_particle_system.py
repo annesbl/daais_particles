@@ -1,5 +1,5 @@
 import unittest
-from Particle_System import ParticleSystem
+from particle_system import ParticleSystem
 from matrix import InteractionMatrix
 
 class TestParticleSystem(unittest.TestCase):

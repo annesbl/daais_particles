@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from Particles import Particle
+from particles import Particle
 
 class TestParticle(unittest.TestCase):
 
