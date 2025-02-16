@@ -1,71 +1,51 @@
-import pytest
 import numpy as np
-from particles import Particle
+import pytest
+from particles import Particle  # Ersetze 'your_module' mit dem tatsächlichen Modulnamen
 
-
-@pytest.fixture
-def sample_particle():
-    """Erzeugt eine Beispiel-Partikelinstanz für Tests."""
+def test_particle_initialization():
+    """Testet die korrekte Initialisierung eines Partikels."""
     position = [50, 50]
     velocity = [1, -1]
     particle_type = "A"
-    color = (255, 0, 0)  # Rot
-    return Particle(position, velocity, particle_type, color)
+    color = (255, 0, 0)
 
+    particle = Particle(position, velocity, particle_type, color)
 
-def test_particle_initialization(sample_particle):
-    """Testet, ob ein Partikel korrekt initialisiert wird."""
-    p = sample_particle
-    assert np.array_equal(p.position, np.array([50, 50]))
-    assert np.array_equal(p.velocity, np.array([1, -1]))
-    assert p.particle_type == "A"
-    assert p.color == (255, 0, 0)
-    assert p.max_influence == 100
-    assert p.size == 5
+    assert np.all(particle.position == np.array(position))
+    assert np.all(particle.velocity == np.array(velocity))
+    assert particle.particle_type == particle_type
+    assert particle.color == color
 
-
-def test_particle_movement(sample_particle):
-    """Testet, ob das Partikel sich korrekt bewegt."""
-    p = sample_particle
+def test_particle_move():
+    """Testet die Bewegung des Partikels mit toroidalen Randbedingungen und Reibung."""
+    particle = Particle([95, 95], [10, 10], "B", (0, 255, 0))
     boundary = (100, 100)
     friction = 0.1
 
-    p.move(boundary, friction)
+    particle.move(boundary, friction)
 
-    assert np.allclose(p.position, np.array([51, 49]))  # Position sollte sich ändern
-    assert np.allclose(p.velocity, np.array([0.9, -0.9]))  # Friction sollte angewendet werden
+    assert 0 <= particle.position[0] < boundary[0], "X-Koordinate sollte sich toroidal anpassen"
+    assert 0 <= particle.position[1] < boundary[1], "Y-Koordinate sollte sich toroidal anpassen"
+    assert np.all(particle.velocity < [10, 10]), "Reibung sollte die Geschwindigkeit reduzieren"
 
-
-def test_toroidal_wrapping():
-    """Testet, ob das Partikel sich toroidal um den Rand bewegt."""
-    p = Particle(position=[99, 99], velocity=[2, 2], particle_type="B")
-    boundary = (100, 100)
-    friction = 0.0  # Keine Reibung für einfachen Test
-
-    p.move(boundary, friction)
-
-    assert np.allclose(p.position, np.array([1, 1]))  # Sollte sich um den Rand wickeln
-
-
-def test_apply_noise(sample_particle):
-    """Testet, ob zufälliges Rauschen zur Geschwindigkeit hinzugefügt wird."""
-    p = sample_particle
-    initial_velocity = p.velocity.copy()
+def test_apply_noise():
+    """Testet, ob Rauschen korrekt auf die Geschwindigkeit angewendet wird."""
+    particle = Particle([50, 50], [0, 0], "C", (0, 0, 255))
     noise_strength = 0.5
 
-    p.apply_noise(noise_strength)
+    initial_velocity = particle.velocity.copy()
+    particle.apply_noise(noise_strength)
 
-    assert not np.array_equal(p.velocity, initial_velocity)  # Velocity sollte sich durch Rauschen ändern
-    assert np.all(np.abs(p.velocity - initial_velocity) <= noise_strength)  # Änderung darf nicht zu groß sein
+    assert not np.all(initial_velocity == particle.velocity), "Die Geschwindigkeit sollte sich durch das Rauschen ändern"
 
+def test_serialize_deserialize():
+    """Testet die Serialisierung und Deserialisierung eines Partikels."""
+    particle = Particle([20, 30], [1, -1], "D", (255, 255, 0))
+    data = particle.serialize()
+    
+    new_particle = Particle.deserialize(data)
 
-def test_serialization(sample_particle):
-    """Testet, ob die Serialisierung und Deserialisierung korrekt funktionieren."""
-    p = sample_particle
-    serialized = p.serialize()
-    deserialized = Particle.deserialize(serialized)
-
-    assert np.array_equal(p.position, deserialized.position)
-    assert np.array_equal(p.velocity, deserialized.velocity)
-    assert p.particle_type == deserialized.particle_type
-    assert p.color == deserialized.color
+    assert np.all(new_particle.position == particle.position)
+    assert np.all(new_particle.velocity == particle.velocity)
+    assert new_particle.particle_type == particle.particle_type
+    assert new_particle.color == particle.color

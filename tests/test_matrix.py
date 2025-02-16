@@ -1,42 +1,45 @@
-import pytest
 import numpy as np
-from your_module import InteractionMatrix  # Ersetze 'your_module' mit deinem Modulnamen
+import pytest
+from matrix import InteractionMatrix  # 
 
 def test_initialize_matrix_random():
-    """Testet, ob die zufällige Interaktionsmatrix korrekt initialisiert wird."""
+    """Testet, ob die Interaktionsmatrix korrekt mit zufälligen Werten initialisiert wird."""
     types = ["A", "B", "C"]
     matrix = InteractionMatrix(types)
-    
-    assert matrix.matrix.shape == (3, 3)
-    assert -1 <= np.min(matrix.matrix) <= 1  # Werte müssen zwischen -1 und 1 liegen
-    assert -1 <= np.max(matrix.matrix) <= 1
+
+    assert matrix.matrix.shape == (3, 3)  # Die Matrix sollte quadratisch sein
+    assert -1 <= matrix.matrix.min() <= 1  # Werte sollten im Bereich [-1, 1] liegen
+    assert -1 <= matrix.matrix.max() <= 1
 
 def test_initialize_matrix_custom():
-    """Testet die Initialisierung mit benutzerdefinierten Interaktionen."""
+    """Testet, ob die Matrix korrekt mit benutzerdefinierten Werten initialisiert wird."""
     types = ["A", "B", "C"]
-    custom_interactions = {("A", "B"): 0.5, ("B", "C"): -0.3}
-    matrix = InteractionMatrix(types, custom_interactions)
+    custom_interactions = {("A", "B"): 0.5, ("B", "C"): -0.7}
     
+    matrix = InteractionMatrix(types, custom_interactions)
+
     assert matrix.get_interaction(("A", "B")) == 0.5
-    assert matrix.get_interaction(("B", "A")) == 0.5  # Spiegelung prüfen
-    assert matrix.get_interaction(("B", "C")) == -0.3
-    assert matrix.get_interaction(("C", "B")) == -0.3  # Spiegelung prüfen
-    assert -1 <= matrix.get_interaction(("A", "C")) <= 1  # Zufälliger Wert
+    assert matrix.get_interaction(("B", "A")) == 0.5  # Symmetrische Matrix
+    assert matrix.get_interaction(("B", "C")) == -0.7
+    assert matrix.get_interaction(("C", "B")) == -0.7
+    assert matrix.get_interaction(("A", "C")) == 0  # Keine definierte Interaktion → Standardwert 0
 
 def test_get_interaction():
-    """Testet die Abrufbarkeit von Interaktionsstärken."""
-    types = ["X", "Y"]
-    custom_interactions = {("X", "Y"): 0.7}
+    """Testet die get_interaction-Methode mit festen Werten."""
+    types = ["A", "B"]
+    custom_interactions = {("A", "B"): 0.8}
     matrix = InteractionMatrix(types, custom_interactions)
-    
-    assert matrix.get_interaction(("X", "Y")) == 0.7
-    assert matrix.get_interaction(("Y", "X")) == 0.7
+
+    assert matrix.get_interaction(("A", "B")) == 0.8
+    assert matrix.get_interaction(("B", "A")) == 0.8
+    assert matrix.get_interaction(("A", "A")) == 0  # Standardwert für nicht gesetzte Werte
+    assert matrix.get_interaction(("B", "B")) == 0
 
 def test_invalid_type():
-    """Testet, ob eine Exception geworfen wird, wenn ein unbekannter Typ angefragt wird."""
+    """Testet, ob ein Fehler ausgelöst wird, wenn ein unbekannter Typ abgefragt wird."""
     types = ["A", "B"]
     matrix = InteractionMatrix(types)
-    
-    with pytest.raises(ValueError):
-        matrix.get_interaction(("A", "C"))  # "C" existiert nicht
 
+    with pytest.raises(ValueError):
+        matrix.get_interaction(("A", "C"))  # "C" existiert nicht in der Typenliste
+    
