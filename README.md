@@ -12,7 +12,7 @@ A dynamic particle simulation demonstrating emergent behavior through biology-in
 - [Code Structure](#code-structure)
 
 
-Overview
+# Overview
 This project simulates particle interactions using **Pygame** for visualization and **KD-Tree** for efficient neighbor searches. It supports different particle types with attraction/repulsion interactions.
 
 ## 🌟 Features
