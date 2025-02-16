@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
-from InteractionMatrix import InteractionMatrix
-from Particle import Particle
+from matrix import InteractionMatrix
+from particles import Particle
 
 
 class TestInteractionMatrix(unittest.TestCase):
