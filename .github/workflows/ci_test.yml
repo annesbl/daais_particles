@@ -1,4 +1,4 @@
-name: Python CI with Matrix
+name: Python CI
 
 on:
   push:
@@ -20,28 +20,35 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt pytest
+        pip install -r requirements.txt pytest ruff
 
-    - name: Check test directory
+    - name: Verify test files exist
       run: |
-        ls -R tests/ || echo "No tests found!"
+        if [ -d "tests" ]; then
+          echo "✅ Test folder exists"
+          ls -R tests/
+        else
+          echo "❌ ERROR: 'tests' folder is missing!"
+          exit 1
+        fi
+      shell: bash
 
-    - name: Run pytest (Check which tests are found)
+    - name: Check which tests are found
       run: |
         pytest --collect-only
 
     - name: Run tests with pytest
       run: |
-        pytest tests/ || (echo "Tests failed or not found!" && exit 1)
+        pytest tests/ --disable-warnings || (echo "❌ Tests failed!" && exit 1)
 
-    - name: Lint with Ruff
+    - name: Lint and format with Ruff
       run: |
         ruff --version
-        ruff check --fix 
+        ruff check --fix .
