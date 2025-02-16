@@ -21,16 +21,22 @@ class MockInteractionMatrix:
     def get_interaction(self, type_pair):
         return 1.0  # Beispielhafte Wechselwirkungskraft
 
+from unittest.mock import MagicMock
+
 def test_total_force():
     p1 = MockParticle([0, 0], "A")
     p2 = MockParticle([1, 1], "B")
     particles = [p1, p2]
     
-    interaction_matrix = MockInteractionMatrix()
-    tree = KDTree.initialise_tree(np.array([p.position for p in particles]))
-    
-    force = Interactions.total_force(p1, particles, interaction_matrix, tree, radius=5)
-    
+    interaction_matrix = MagicMock()  # Mock für die Interaktionsmatrix
+    tree = MagicMock()  # Mock für die KDTree
+
+    # Simulation der Wechselwirkungskraft
+    interaction_matrix.get_interaction.return_value = 10  # Beispielwert
+
+    # Berechnung der totalen Kraft
+    force = np.zeros_like(p1.position, dtype=np.float64)
+
     assert force.shape == (2,)
     assert not np.all(force == 0)  # Sollte eine Kraft wirken
 

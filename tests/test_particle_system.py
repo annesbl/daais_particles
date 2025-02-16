@@ -32,9 +32,7 @@ def test_initialize_particles(mock_particle_system):
         assert particle.particle_type in ["A", "B"]
 
 def test_update(mock_particle_system):
-    """Testet, ob das Update des Partikelsystems ohne Fehler ausgeführt wird."""
     system = mock_particle_system
-
     initial_positions = np.array([p.position for p in system.particles])
     system.update()
 
@@ -43,7 +41,6 @@ def test_update(mock_particle_system):
     assert not np.all(initial_positions == updated_positions), "Partikelpositionen sollten sich ändern"
 
 def test_noise_application(mock_particle_system):
-    """Testet, ob Rauschstärke korrekt auf Partikel angewendet wird."""
     system = mock_particle_system
     initial_velocities = np.array([p.velocity for p in system.particles])
 
@@ -51,4 +48,3 @@ def test_noise_application(mock_particle_system):
     updated_velocities = np.array([p.velocity for p in system.particles])
 
     assert not np.all(initial_velocities == updated_velocities), "Rauschen sollte die Geschwindigkeit verändern"
-
