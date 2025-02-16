@@ -2,15 +2,20 @@
 import numpy as np
 from scipy.spatial import cKDTree
 
+
+
+
 class KDTree():
     #build a KD tree to find the nearest neighbors
     def initialise_tree(particle_array):
-        tree = cKDTree(particle_array)
+        tree = cKDTree(particle_array) #Creates a KD-tree for nearest neighbor search
         return tree
     
     
+
+
 class Interactions():
-    #the total force between two particles
+    #calculates the total force between two particles
     def total_force(p1, p2, interaction_matrix):
         """
         Calculate the total force between two particles, including push and pull components.
@@ -26,18 +31,20 @@ class Interactions():
         push_force = Interactions.push_force(p1, p2, interaction_matrix)
         return pull_force + push_force
     
+    
     #the pull force between two particles
     def pull_force(p1, p2, interaction_matrix):
-        distance = np.linalg.norm(p2.position - p1.position)
+        distance = np.linalg.norm(p2.position - p1.position) #Computes the distance between particles
         if distance == 0:
             return np.zeros_like(p1.position)
-        # Get pull strength from the matrix
-        type_pair = (p1.particle_type, p2.particle_type)
-        strength = interaction_matrix.get_interaction(type_pair)
-        # Pull force decreases with distance (e.g., inverse square)
-        force_magnitude = strength / (distance**2)
+        #Get pull strength from the matrix
+        type_pair = (p1.particle_type, p2.particle_type) #Defines the interaction type pair
+        strength = interaction_matrix.get_interaction(type_pair) #Gets pull strength from interaction matrix
+        #Pull force decreases with distance (e.g., inverse square)
+        force_magnitude = strength / (distance**2) #Force decreases with the square of the distance
         direction = (p2.position - p1.position) / distance
         return force_magnitude * direction
+    
     
     #the push force between two particles
     def push_force(p1, p2, interaction_matrix):
@@ -51,9 +58,13 @@ class Interactions():
         type_pair = (p1.particle_type, p2.particle_type)
         strength = interaction_matrix.get_interaction(type_pair)
         # Push force increases as particles get closer (e.g., inverse square)
-        force_magnitude = -strength / (distance**2)
+        force_magnitude = -strength / (distance**2) #Push force increases as distance decreases
         direction = (p2.position - p1.position) / distance
         return force_magnitude * direction
+
+
+
+
 class Implementation():
     #find the nearest particles, calculate the forces and return updated placements
     def update_particles(self, tree, influence_range,  particles, interaction_matrix, sim_area, friction):
@@ -82,7 +93,7 @@ class Implementation():
                     )
             
             # Apply force to velocity
-            particle.velocity += total_force * 0.01  # Adjust time step as needed
-            particle.move(sim_area, friction)  # Update position based on velocity
+            particle.velocity += total_force * 0.01  #Adjusts the velocity based on the time step
+            particle.move(sim_area, friction)  #Update position based on velocity and position
             updated_particles.append(particle)
         return updated_particles
