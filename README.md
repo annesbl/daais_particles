@@ -31,7 +31,7 @@ To install particle_life_simulator from a GitHub repository, run:
 git clone https://github.com/annesbl/daais_particles.git
 cd daais_particles
 python -m pip install .
-# or on mac: python3 -m pip install .
+or on mac: python3 -m pip install .
 
 ## 🔧 Code Structure
 🔹 1. simulation.py
