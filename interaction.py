@@ -33,7 +33,7 @@ class Interactions():
             return np.zeros_like(p1.position)
         # Get pull strength from the matrix
         type_pair = (p1.particle_type, p2.particle_type)
-        strength = interaction_matrix.get_interaction(type_pair, 0)
+        strength = interaction_matrix.get_interaction(type_pair)
         # Pull force decreases with distance (e.g., inverse square)
         force_magnitude = strength / (distance**2)
         direction = (p2.position - p1.position) / distance
@@ -49,7 +49,7 @@ class Interactions():
             return np.zeros_like(p1.position)
         # Get push strength from the matrix
         type_pair = (p1.particle_type, p2.particle_type)
-        strength = interaction_matrix.get_interaction(type_pair, 0)
+        strength = interaction_matrix.get_interaction(type_pair)
         # Push force increases as particles get closer (e.g., inverse square)
         force_magnitude = -strength / (distance**2)
         direction = (p2.position - p1.position) / distance
