@@ -1,0 +1,1 @@
+InteractionMatrix(particle_types, custom_interactions)
