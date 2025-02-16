@@ -41,4 +41,5 @@ def test_invalid_type():
     matrix = InteractionMatrix(types)
 
     with pytest.raises(ValueError):
-        m
+        matrix.get_interaction(("A", "C"))  # "C" existiert nicht in der Typenliste
+    
