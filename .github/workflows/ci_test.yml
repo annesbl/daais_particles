@@ -29,19 +29,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt pytest
 
-    - name: Set PYTHONPATH
+    - name: Check test directory
       run: |
-        echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+        ls -R tests/ || echo "No tests found!"
 
-    - name: Run pytest (Collecting Tests)
+    - name: Run pytest (Check which tests are found)
       run: |
-        pytest --collect-only  # Zeigt alle gefundenen Tests an
+        pytest --collect-only
 
     - name: Run tests with pytest
       run: |
-        pytest tests/  # Führt Tests aus dem 'tests/'-Ordner aus
+        pytest tests/ || (echo "Tests failed or not found!" && exit 1)
 
     - name: Lint with Ruff
       run: |
-        ruff --version  # Verifizieren, ob Ruff installiert ist
+        ruff --version
         ruff check --fix 
