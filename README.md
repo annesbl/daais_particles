@@ -1,12 +1,12 @@
-#Heading 1
+# Heading 1
 Particle Life Simulator
 
-#Heaign 2
+# Headign 2
 Group D
 
 A dynamic particle simulation demonstrating emergent behavior through biology-inspired interaction rules.
 
-#Heading 2
+# Heading 2
 Table of Contents
 
 Overview
