@@ -1,31 +1,51 @@
-name: Python CI  #Name of the workflow
+name: Python CI with Matrix
 
 on:
   push:
-    branches:
-      - main  #Trigger the CI process when pushing to the 'main' branch
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main  #Trigger the CI process when creating a pull request to the 'main' branch
+    branches: [ "main" ]
 
 jobs:
   test:
-    runs-on: ubuntu-latest  #The environment where the CI process runs (Ubuntu latest version)
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.8", "3.9", "3.10"]
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2  #Checks out the latest code from the repository
+    - name: Check out repository
+      uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v2  #Sets up the Python environment
+      uses: actions/setup-python@v3
       with:
-        python-version: '3.8'  #Choose the Python version you want to use (in this case, Python 3.8)
+        python-version: ${{ matrix.python-version }}
 
-    - name: Install Dependencies
+    - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip  #Upgrade pip to the latest version
-        pip install -r requirements.txt  #Install all dependencies listed in requirements.txt
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-    - name: Run Tests
+    - name: Install pytest
       run: |
-        pytest  #Runs the tests using pytest framework
+        pip install pytest
+
+    - name: Run tests with pytest
+      shell: bash
+      run: |
+        export PYTHONPATH=$(pwd)
+        pytest
+
+
+    - name: Lint with Ruff
+      run: |
+        ruff --version  # Verifying installation first
+        ruff check ./tests ./particle_simulation --fix --ignore E501,F403,E402,F405,E902
+
+    - name: Run tests with pytest
+      run: |
+        export PYTHONPATH=$(pwd)
+        pytest
