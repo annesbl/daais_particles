@@ -1,5 +1,18 @@
-# Particle Simulation using Pygame & KD-Tree 
- 
+Particle Life Simulator
+
+Group D
+
+A dynamic particle simulation demonstrating emergent behavior through biology-inspired interaction rules.
+
+Table of Contents
+
+Overview
+Features
+Installation and Setup
+Code Structure
+
+
+Overview
 This project simulates particle interactions using **Pygame** for visualization and **KD-Tree** for efficient neighbor searches. It supports different particle types with attraction/repulsion interactions.
 
 ## 🌟 Features
