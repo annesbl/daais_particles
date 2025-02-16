@@ -6,10 +6,10 @@ A dynamic particle simulation demonstrating emergent behavior through biology-in
 
 # Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Installation and Setup](#installation-and-setup)
-- [Code Structure](#code-structure)
+- [Overview](#-overview)
+- [Features](#-🌟-features)
+- [Installation and Setup](#-🚀-installation-&-setup)
+- [Code Structure](#-🔧-code-structure)
 
 
 ## Overview
@@ -37,7 +37,7 @@ python src/simulation.py
 
 ---
 
-## 🔧 How the Code Works
+## 🔧 Code Structure
 🔹 1. simulation.py
 - Initializes the particle system and interaction matrix.
 - Runs the Pygame loop to render moving particles.
