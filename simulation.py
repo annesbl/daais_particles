@@ -4,51 +4,60 @@ from particle_system import ParticleSystem
 from board import Board
 from matrix import InteractionMatrix
 
+
+
 class Simulation:
     def __init__(self, width, height, particle_count, particle_types, interaction_matrix):
             self.width = width
             self.height = height
-            self.running = True
+            self.running = True  #Flag to control the simulation's run state
+            self.interaction_matrix = interaction_matrix  #Assigns the provided interaction matrix
             
-            custom_interactions = {
-            ("A", "B"): 1.0,   #A zieht B an
-            ("A", "C"): -1.0,  #A stößt C ab
-            ("B", "C"): 0.5,   #B zieht C schwach an
-            ("D", "A"): -1.5,  #D stößt A stark ab
-            }
-        
-            self.interaction_matrix = interaction_matrix
-        
+            #Initializes the particle system with the given parameters
             self.particle_system = ParticleSystem(
             particle_count, (width, height), {ptype: None for ptype in particle_types}, self.interaction_matrix
             )
-        
+            #Initializes the board for rendering the simulation
             self.board = Board(width, height)
         
+    
     def run(self):
+        """
+        Main loop that runs the simulation
+        """
         while self.running:
-                self.handle_events()
-                self.update()
-                self.render()
+                self.handle_events()  #Handles user inputs or quit event
+                self.update()  #Updates the simulation state (particles, interactions)
+                self.render()  #Renders the updated particle system on the screen
+
         
-            
     def handle_events(self):
+        """
+        Checks for user input events (e.g., quit request)
+        """
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.running = False
+                    self.running = False  #Stops the simulation if the user closes the window
 
                 
     def update(self):
+        """
+        Updates the particle system with the given parameters
+        """
         self.particle_system.update(
                 noise_strength=0.1, influence_range=50, friction=0.01
             )
     
     def render(self):
+        """
+        Draws the particles on the screen and updates the display
+        """
         self.board.draw_particles(self.particle_system.particles)
-        self.board.update_display()
+        self.board.update_display()  #Refreshes the display to show the new state
 
 
 if __name__ == "__main__":
+    
     #Simulation parameters
     WIDTH, HEIGHT = 800, 600
     PARTICLE_COUNT = 1000
