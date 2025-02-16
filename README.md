@@ -35,6 +35,14 @@ python -m pip install .
 or on mac: python3 -m pip install 
 ```
 
+##⚡ Example Usage
+
+Adjust Particle Count Modify simulation.py:
+
+```sh
+PARTICLE_COUNT = 1000 # Increase for more particles
+```
+
 ## Project Structure
 
 ```sh
