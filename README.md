@@ -27,11 +27,22 @@ This project simulates particle interactions using **Pygame** for visualization 
 ---
 
 ## 🚀 Installation & Setup
-To install particle_life_simulator from a GitHub repository, run:
+To install particle_life_simulator from a GitHub repository, run: 
 git clone https://github.com/annesbl/daais_particles.git
 cd daais_particles
 python -m pip install .
-# or on mac: python3 -m pip install .
+or on mac: python3 -m pip install .
+
+---
+
+##⚡ Example Usage
+
+Adjust Particle Count
+Modify simulation.py:
+
+PARTICLE_COUNT = 1000  # Increase for more particles
+
+---
 
 ## 🔧 Code Structure
 🔹 1. simulation.py
@@ -62,7 +73,7 @@ python -m pip install .
 
 ---
 
-### 🧪 Running Unit Tests
+## 🧪 Running Unit Tests
 
 To run tests, use:
 
@@ -70,16 +81,7 @@ python -m unittest discover tests/
 
 ---
 
-###⚡ Example Usage
-
-Adjust Particle Count
-Modify simulation.py:
-
-PARTICLE_COUNT = 1000  # Increase for more particles
-
----
-
-### 📌 Notes
+## 📌 Notes
 This project is optimized using KD-Tree for large-scale simulations.
 Pygame must be installed to visualize particles.
 
