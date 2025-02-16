@@ -4,6 +4,7 @@ from simulation import Simulation
 from particle_system import ParticleSystem
 from board import Board
 from matrix import InteractionMatrix
+import pygame
 
 class TestSimulation(unittest.TestCase):
 

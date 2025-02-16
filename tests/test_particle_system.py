@@ -3,7 +3,7 @@ import pytest
 from particle_system import ParticleSystem  
 from particles import Particle
 from matrix import InteractionMatrix
-from interaction import KDTree, Implementation
+
 
 class MockParticle(Particle):
     """Mock-Klasse für Partikel mit einer fixierten `apply_noise`-Methode."""

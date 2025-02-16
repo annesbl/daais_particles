@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.spatial import cKDTree
 from interaction import KDTree
+from interaction import Interactions
 
 def test_initialise_tree():
     particle_array = np.array([[0, 0], [1, 1], [2, 2]])
@@ -10,8 +11,6 @@ def test_initialise_tree():
     assert tree.n == len(particle_array)  # Check if KDTree contains all particles
 
 
-import numpy as np
-from interaction import Interactions
 
 class MockParticle:
     def __init__(self, position, particle_type):
