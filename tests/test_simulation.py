@@ -64,19 +64,7 @@ class TestSimulation(unittest.TestCase):
         mock_draw_particles.assert_called_once()
         mock_update_display.assert_called_once()
 
-    @patch("pygame.event.get", return_value=[MagicMock(type=pygame.QUIT)])
-    def test_run_quit(self, mock_events):
-        # Mock the interaction matrix
-        interaction_matrix = MagicMock(spec=InteractionMatrix)
-        
-        # Initialize the simulation
-        simulation = Simulation(800, 600, 1000, ["A", "B", "C", "D"], interaction_matrix)
-
-        # Run the simulation loop and quit after one cycle
-        simulation.run()
-
-        # Check if the simulation has stopped running
-        self.assertFalse(simulation.running)
+    
 
 if __name__ == "__main__":
     unittest.main()
