@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 from particles import Particle
 from interaction import KDTree, Implementation
-from interaction_matrix import InteractionMatrix  # Falls die Klasse hier gespeichert ist
+from matrix import InteractionMatrix  # Falls die Klasse hier gespeichert ist
 from particle_system import ParticleSystem  # Ersetze mit deinem Modulnamen
 
 
