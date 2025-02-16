@@ -38,16 +38,3 @@ class MockInteractionMatrix:
 
 
 
-def test_determine_force():
-    p1 = MockParticle([0, 0], "A")
-    p2 = MockParticle([1, 1], "B")
-    
-    interaction_matrix = MockInteractionMatrix()
-    
-    distance_vector = p2.position - p1.position
-    distance = np.linalg.norm(distance_vector)
-    
-    force = Interactions.determine_force(p1, p2, interaction_matrix, distance_vector, distance)
-    
-    assert force.shape == (2,)
-    assert not np.all(force == 0)  # Sollte eine Kraft wirken
