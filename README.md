@@ -9,6 +9,7 @@ A dynamic particle simulation demonstrating emergent behavior through biology-in
 - [Overview](#-overview)
 - [Features](#-🌟-features)
 - [Installation and Setup](#-🚀-installation-&-setup)
+- [Project Structure](#-project-structure)
 - [Code Structure](#-🔧-code-structure)
 - [License](#license)
 
@@ -36,7 +37,26 @@ pip install -r requirements.txt
 Execute the following command:
 python src/simulation.py
 
----
+
+## Project Structure
+daais_particles/
+├── particle_life/
+│   ├── Class_board.py                
+│   ├── Class_particles.py           
+│   ├── Class_simulation.py      
+│   ├── Class_interaction.py
+│   ├── Class_matrix.py
+│   ├── Class_particle_system.py
+├── tests/
+│   ├── test_board.py                
+│   ├── test_particles.py           
+│   ├── test_simulation.py      
+│   ├── test_interaction.py
+│   ├── test_matrix.py
+│   ├── test_particle_system.py     
+├── README.md                       # Project documentation
+├── LICENSE                         # License file
+
 
 ## 🔧 Code Structure
 🔹 1. simulation.py
