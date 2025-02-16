@@ -16,7 +16,7 @@ class TestSimulation(unittest.TestCase):
         interaction_matrix = MagicMock(spec=InteractionMatrix)
     
     # Initialisiere die Simulation
-            simulation = Simulation(800, 600, 1000, ["A", "B", "C", "D"], interaction_matrix)
+        simulation = Simulation(800, 600, 1000, ["A", "B", "C", "D"], interaction_matrix)
     
     # Mock für das ParticleSystem, um 'particle_count' hinzuzufügen
         simulation.particle_system = MagicMock()
