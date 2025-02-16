@@ -1,10 +1,5 @@
 name: Python CI with Matrix
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   test:
