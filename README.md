@@ -39,29 +39,29 @@ python src/simulation.py
 ---
 
 ## 🔧 Code Structure
-🔹 1. simulation.py
+####🔹 1. simulation.py
 - Initializes the particle system and interaction matrix.
 - Runs the Pygame loop to render moving particles.
 
-🔹 2. particle_system.py
+####🔹 2. particle_system.py
 - Generates random particles with initial positions & velocities.
 - Uses KD-Tree for efficient neighbor searches.
 - Updates particle positions based on interactions & friction.
 
-🔹 3. particles.py
+####🔹 3. particles.py
 - Defines the Particle class, including:
 - Position, velocity, and size.
 - Methods to move particles and apply noise/randomness.
 
-🔹 4. interaction.py
+####🔹 4. interaction.py
 - Implements KD-Tree for neighbor search.
 - Computes attraction/repulsion forces using a custom interaction matrix.
 
-🔹 5. matrix.py
+####🔹 5. matrix.py
 - Defines interaction strengths between particle types.
 - Supports custom attraction/repulsion rules.
 
-🔹 6. board.py
+####🔹 6. board.py
 - Handles Pygame visualization.
 - Renders particles and updates frames.
 
