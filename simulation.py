@@ -22,11 +22,13 @@ class Simulation:
                 self.handle_events()
                 self.update()
                 self.render()
+        
             
     def handle_events(self):
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+
                 
     def update(self):
         self.particle_system.update(
