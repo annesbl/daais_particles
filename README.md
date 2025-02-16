@@ -25,23 +25,42 @@ This project simulates particle interactions using **Pygame** for visualization 
 - **Toroidal Wrapping Boundaries** (Particles wrap around the screen)
 - **Unit Tests for Core Components** (Particle System)
 
+## System Requirements 
+
+✅ Python 3.8+
+✅ Required Libraries: pygame, numpy, scipy
 
 ## 🚀 Installation & Setup
-```sh
+
 To install particle_life_simulator from a GitHub repository, run: 
+```sh 
 git clone https://github.com/annesbl/daais_particles.git
 cd daais_particles
 python -m pip install .
 or on mac: python3 -m pip install 
 ```
+Make sure you have Pygame and other dependencies installed:
 
-##⚡ Example Usage
+```sh 
+pip install pygame numpy scipy
 
-Adjust Particle Count Modify simulation.py:
+```
+
+## ⚡ How to use 
+
+1. Adjust Particle Count Modify simulation.py:
 
 ```sh
 PARTICLE_COUNT = 1000 # Increase for more particles
 ```
+
+2. Run the Simulation
+```sh 
+python simulation.py
+
+```
+
+3. Pygame Window opens showing moving particles.
 
 ## Project Structure
 
@@ -92,6 +111,14 @@ daais_particles/
 - Handles Pygame visualization.
 - Renders particles and updates frames.
 
+
+## Running Tests 
+
+
+## 🚀 Future Improvements 
+✔️ Add GUI controls (adjust speed, interaction strength).
+✔️ Improve performance for large particle counts.
+✔️ Introduce new interaction rules dynamically.
 
 ## 📌 Notes
 This project is optimized using KD-Tree for large-scale simulations.
