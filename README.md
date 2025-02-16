@@ -116,9 +116,9 @@ daais_particles/
 
 
 ## 🚀 Future Improvements 
-✔️ Add GUI controls (adjust speed, interaction strength).
-✔️ Improve performance for large particle counts.
-✔️ Introduce new interaction rules dynamically.
+- Add GUI controls (adjust speed, interaction strength).
+- Improve performance for large particle counts.
+- Introduce new interaction rules dynamically.
 
 ## 📌 Notes
 This project is optimized using KD-Tree for large-scale simulations.
