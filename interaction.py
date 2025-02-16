@@ -1,6 +1,7 @@
 #imports
 import numpy as np
 from scipy.spatial import cKDTree
+from numba import jit
 
 class KDTree():
     #build a KD tree to find the nearest neighbors
@@ -29,6 +30,7 @@ class Interactions():
 
 
     # Berechnet die Anziehungskraft zwischen zwei Partikeln
+    @jit(nopython=True)  # JIT compilation (no parallelization needed for this one)
     def pull_force(p1, p2, interaction_matrix, distance_vector, distance):
         if distance == 0:
             return np.zeros_like(p1.position)
@@ -40,6 +42,7 @@ class Interactions():
         return force_magnitude * direction
 
     # Berechnet die Abstoßungskraft zwischen zwei Partikeln
+    @jit(nopython=True)  # JIT compilation (no parallelization needed for this one)
     def push_force(p1, p2, interaction_matrix, distance_vector, distance):
         if distance == 0 or distance > 1:  # Begrenzung der Push-Kraft
             return np.zeros_like(p1.position)
