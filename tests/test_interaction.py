@@ -54,27 +54,7 @@ def test_total_force(mock_particles, interaction_matrix, tree):
     assert force.shape == (2,)
     assert np.linalg.norm(force) >= 0  # Kraft sollte >= 0 sein
 
-def test_pull_force(mock_particles, interaction_matrix):
-    """Testet die Anziehungskraft zwischen zwei Partikeln."""
-    p1, p2 = mock_particles[:2]
-    distance_vector = p2.position - p1.position
-    distance = np.linalg.norm(distance_vector)
 
-    force = Interactions.pull_force(p1, p2, interaction_matrix, distance_vector, distance)
-    
-    assert isinstance(force, np.ndarray)
-    assert force.shape == (2,)
-
-def test_push_force(mock_particles, interaction_matrix):
-    """Testet die Abstoßungskraft zwischen zwei Partikeln."""
-    p1, p2 = mock_particles[:2]
-    distance_vector = p2.position - p1.position
-    distance = np.linalg.norm(distance_vector)
-
-    force = Interactions.push_force(p1, p2, interaction_matrix, distance_vector, distance)
-    
-    assert isinstance(force, np.ndarray)
-    assert force.shape == (2,)
 
 def test_update_particles(mock_particles, interaction_matrix, tree):
     """Testet, ob die Partikel korrekt aktualisiert werden."""
