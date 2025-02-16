@@ -113,7 +113,10 @@ daais_particles/
 
 
 ## Running Tests 
-
+To run tests, use:
+```sh
+python -m unittest discover tests/
+```
 
 ## 🚀 Future Improvements 
 - Add GUI controls (adjust speed, interaction strength).
