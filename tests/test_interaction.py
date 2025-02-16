@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 from scipy.spatial import cKDTree
 from unittest.mock import MagicMock
-from your_module import KDTree, Interactions, Implementation  # Ersetze 'your_module' mit dem richtigen Modulnamen
+from interaction import KDTree, Interactions, Implementation  # Ersetze 'your_module' mit dem richtigen Modulnamen
 
 # Dummy Particle-Klasse für Testzwecke
 class Particle:

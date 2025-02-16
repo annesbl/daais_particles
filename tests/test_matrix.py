@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from your_module import InteractionMatrix  # Ersetze 'your_module' mit deinem Modulnamen
+from matrix import InteractionMatrix  # Ersetze 'your_module' mit deinem Modulnamen
 
 def test_initialize_matrix_random():
     """Testet, ob die zufällige Interaktionsmatrix korrekt initialisiert wird."""
