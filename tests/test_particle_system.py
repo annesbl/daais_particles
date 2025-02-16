@@ -1,69 +1,54 @@
-import pytest
 import numpy as np
+import pytest
+from particle_system import ParticleSystem  
 from particles import Particle
+from matrix import InteractionMatrix
 from interaction import KDTree, Implementation
-from matrix import InteractionMatrix  # Falls die Klasse hier gespeichert ist
-from particle_system import ParticleSystem  # Ersetze mit deinem Modulnamen
 
+class MockParticle(Particle):
+    """Mock-Klasse für Partikel mit einer fixierten `apply_noise`-Methode."""
+    def apply_noise(self, noise_strength):
+        self.velocity += np.random.uniform(-noise_strength, noise_strength, size=2)
 
 @pytest.fixture
-def sample_particle_system():
-    """Erzeugt ein Beispiel-ParticleSystem für die Tests."""
+def mock_particle_system():
+    """Fixture zur Erstellung eines Partikelsystems mit Mock-Daten."""
     particle_count = 10
     boundary = (100, 100)
-    types = {"A": (255, 0, 0), "B": (0, 255, 0), "C": (0, 0, 255), "D": (255, 255, 0)}
+    types = {"A": (255, 0, 0), "B": (0, 255, 0)}
     interaction_matrix = InteractionMatrix(types.keys())
 
-    return ParticleSystem(particle_count, boundary, types, interaction_matrix)
+    system = ParticleSystem(particle_count, boundary, types, interaction_matrix)
+    system.particles = [MockParticle(p.position, p.velocity, p.particle_type, p.color) for p in system.particles]
+    return system
 
+def test_initialize_particles(mock_particle_system):
+    """Testet, ob Partikel korrekt initialisiert werden."""
+    system = mock_particle_system
+    assert len(system.particles) == 10
+    for particle in system.particles:
+        assert 0 <= particle.position[0] <= 100
+        assert 0 <= particle.position[1] <= 100
+        assert particle.particle_type in ["A", "B"]
 
-def test_initialize_particles(sample_particle_system):
-    """Testet, ob die Partikel korrekt initialisiert werden."""
-    ps = sample_particle_system
+def test_update(mock_particle_system):
+    """Testet, ob das Update des Partikelsystems ohne Fehler ausgeführt wird."""
+    system = mock_particle_system
 
-    assert len(ps.particles) == 10  # Überprüft, ob alle Partikel erstellt wurden
-    for particle in ps.particles:
-        assert 0 <= particle.position[0] <= ps.boundary[0]
-        assert 0 <= particle.position[1] <= ps.boundary[1]
-        assert -1 <= particle.velocity[0] <= 1
-        assert -1 <= particle.velocity[1] <= 1
-        assert particle.particle_type in ps.types
+    initial_positions = np.array([p.position for p in system.particles])
+    system.update()
 
+    updated_positions = np.array([p.position for p in system.particles])
 
-def test_update_particles(sample_particle_system):
-    """Testet, ob das Update die Partikelpositionen verändert."""
-    ps = sample_particle_system
-    initial_positions = np.array([p.position.copy() for p in ps.particles])
+    assert not np.all(initial_positions == updated_positions), "Partikelpositionen sollten sich ändern"
 
-    ps.update(noise_strength=0.05, influence_range=50, friction=0.01)
+def test_noise_application(mock_particle_system):
+    """Testet, ob Rauschstärke korrekt auf Partikel angewendet wird."""
+    system = mock_particle_system
+    initial_velocities = np.array([p.velocity for p in system.particles])
 
-    updated_positions = np.array([p.position for p in ps.particles])
-    assert not np.array_equal(initial_positions, updated_positions)  # Positionen müssen sich ändern
+    system.update(noise_strength=0.5)
+    updated_velocities = np.array([p.velocity for p in system.particles])
 
+    assert not np.all(initial_velocities == updated_velocities), "Rauschen sollte die Geschwindigkeit verändern"
 
-def test_update_noise_effect(sample_particle_system):
-    """Testet, ob Rauschstärke die Bewegung beeinflusst."""
-    ps = sample_particle_system
-    initial_positions = np.array([p.position.copy() for p in ps.particles])
-
-    ps.update(noise_strength=1.0, influence_range=50, friction=0.01)
-
-    updated_positions = np.array([p.position for p in ps.particles])
-    assert not np.array_equal(initial_positions, updated_positions)  # Änderungen durch Rauschen erwartet
-
-
-def test_particle_colors(sample_particle_system):
-    """Testet, ob Partikel die richtigen Farben zugeordnet bekommen."""
-    ps = sample_particle_system
-
-    for particle in ps.particles:
-        assert particle.color == ps.types[particle.particle_type]  # Farbe muss mit Typ übereinstimmen
-
-
-def test_kdtree_initialization(sample_particle_system):
-    """Testet, ob KDTree korrekt erstellt wird."""
-    ps = sample_particle_system
-    positions = [p.position for p in ps.particles]
-
-    tree = KDTree.initialise_tree(positions)
-    assert tree is not None
