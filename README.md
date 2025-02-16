@@ -1,4 +1,4 @@
-# Particle Simulation using Pygame & KD-Tree
+# Particle Simulation using Pygame & KD-Tree 
  
 This project simulates particle interactions using **Pygame** for visualization and **KD-Tree** for efficient neighbor searches. It supports different particle types with attraction/repulsion interactions.
 
