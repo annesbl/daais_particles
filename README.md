@@ -37,7 +37,7 @@ python src/simulation.py
 
 ---
 
-🔧 How the Code Works
+## 🔧 How the Code Works
 🔹 1. simulation.py
 - Initializes the particle system and interaction matrix.
 - Runs the Pygame loop to render moving particles.
