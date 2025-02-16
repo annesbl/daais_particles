@@ -39,7 +39,7 @@ def test_update(mock_particle_system):
     
     # Mock für die Interaktionsmatrix, stelle sicher, dass 'types' eine Liste ist
     interaction_matrix = MagicMock()
-    interaction_matrix.types = ["A", "B", "C", "D"]  # types als Liste simulieren
+    interaction_matrix.types = ["A", "B", "C", "D"]  #ypes als Liste simulieren
     system.update()
     
     # Weitere Asserts, falls erforderlich
