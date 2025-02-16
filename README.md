@@ -12,28 +12,6 @@ This project simulates particle interactions using **Pygame** for visualization 
 
 ---
 
-## 🏗️ Code 
-
-📂 daais_particles 
--│── 📜 README.md # Project Documentation 
--│── 📜 requirements.txt # Required dependencies 
--│── 📜 .gitignore # Ignoring unnecessary files 
--│ ├── 📂 src # Main source code folder 
--│ │── 📜 simulation.py # Main file to run the simulation 
--│ │── 📜 particle_system.py # Handles particle updates & interactions 
--│ │── 📜 particles.py # Particle class definition 
--│ │── 📜 board.py # Handles Pygame visualization 
--│ │── 📜 matrix.py # Defines interaction strengths 
--│ │── 📜 interaction.py # Implements KD-Tree & forces calculations 
--│ ├── 📂 tests # Unit tests 
--│ │── 📜 test_particles.py # Unit tests for Particle class 
--│ │── 📜 test_particle_system.py # Unit tests for ParticleSystem 
--│ │── 📜 test_simulation.py # Integration tests 
--│ └── 📂 assets # (Optional) Store assets like images
-
-
----
-
 ## 🚀 Installation & Setup
 ### ** 1 Install Dependencies**
 Make sure you have **Python 3.8+** installed. Then, install required libraries:
