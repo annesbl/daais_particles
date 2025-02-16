@@ -25,60 +25,74 @@ The system supports a variety of particle types (A, B, C, D) and interaction rul
 To install the **Particle Life Simulator**, follow these steps:<br>
 
 1. Clone the repository:<br>
-
-bash<br>
+```bash
 git clone https://github.com/annesbl/daais_particles.git<br>
-cd daais_particles<br>
-Install the package:<br>
-python -m pip install .<br>
-Or, on macOS:<br>
+cd daais_particles
+```
+```
+2. Install the package:
+```bash
 
-python3 -m pip install .<br>
-Install the required dependencies:<br>
-pip install pygame numpy scipy<br>
+python -m pip install
+```
+
+Or, on macOS:
+```bash
+python3 -m pip install
+```
+
+3. Install the required dependencies:
+```bash
+pip install pygame numpy scipy
+```
 
 ## Usage
 
 Adjust Particle Count
 To change the number of particles, modify the PARTICLE_COUNT variable in simulation.py:
-
+```
 PARTICLE_COUNT = 1000  # Adjust this to change the number of particles
-Running the Simulation<br>
-Once you have configured your settings, you can run the simulation with:
+```
+Running the Simulation
 
-python simulation.py<br>
+Once you have configured your settings, you can run the simulation with:
+```
+python simulation.py
+```
+
+
 This will open a Pygame window where you can watch the particles interact based on the interaction matrix.
 
 ## Project Architecture
 
 The project is structured into several modules that handle different parts of the simulation:
-
-daais_particles/<br>
-├── particle_life/<br>
-│   ├── Class_board.py              # Handles visualization<br>
-│   ├── Class_particles.py         # Defines particle properties and movement<br>
-│   ├── Class_simulation.py        # Contains the main simulation logic<br>
-│   ├── Class_interaction.py       # Computes interaction forces and KD-Tree operations<br>
-│   ├── Class_matrix.py            # Manages the interaction matrix<br>
-│   ├── Class_particle_system.py   # Manages the particle system and updates<br>
-├── tests/<br>
-│   ├── test_board.py              # Unit tests for the board class<br>
-│   ├── test_particles.py         # Unit tests for particle class<br>
-│   ├── test_simulation.py        # Unit tests for simulation class<br>
-│   ├── test_interaction.py       # Unit tests for interaction logic<br>
-│   ├── test_matrix.py            # Unit tests for matrix class<br>
-│   ├── test_particle_system.py   # Unit tests for the particle system<br>
-├── README.md                     # Project documentation<br>
-├── LICENSE                        # License file<br>
-
+```
+daais_particles/
+├── particle_life/
+│   ├── Class_board.py              # Handles visualization
+│   ├── Class_particles.py         # Defines particle properties and movement
+│   ├── Class_simulation.py        # Contains the main simulation logic
+│   ├── Class_interaction.py       # Computes interaction forces and KD-Tree operations
+│   ├── Class_matrix.py            # Manages the interaction matrix
+│   ├── Class_particle_system.py   # Manages the particle system and updates
+├── tests/
+│   ├── test_board.py              # Unit tests for the board class
+│   ├── test_particles.py         # Unit tests for particle class
+│   ├── test_simulation.py        # Unit tests for simulation class
+│   ├── test_interaction.py       # Unit tests for interaction logic
+│   ├── test_matrix.py            # Unit tests for matrix class
+│   ├── test_particle_system.py   # Unit tests for the particle system
+├── README.md                     # Project documentation
+├── LICENSE                        # License file
+```
 
 ## Main Components
-**simulation.py:** The entry point of the simulation. Initializes the particle system and interaction matrix, and runs the Pygame loop.<br>
-**particle_system.py:** Manages the creation and updating of particles using the KD-Tree for efficient nearest-neighbor searches.<br>
-**particles.py:** Defines the Particle class, which includes attributes like position, velocity, and type.<br>
-**interaction.py:** Handles particle interaction logic, including force calculations using the custom interaction matrix and KD-Tree optimization.<br>
-**matrix.py:** Contains the InteractionMatrix class, which defines interaction strengths between particle types and supports both custom and random interactions.<br>
-**board.py:** Manages the Pygame window and rendering of particles.<br>
+**simulation.py:** The entry point of the simulation. Initializes the particle system and interaction matrix, and runs the Pygame loop.
+**particle_system.py:** Manages the creation and updating of particles using the KD-Tree for efficient nearest-neighbor searches.
+**particles.py:** Defines the Particle class, which includes attributes like position, velocity, and type.
+**interaction.py:** Handles particle interaction logic, including force calculations using the custom interaction matrix and KD-Tree optimization.
+**matrix.py:** Contains the InteractionMatrix class, which defines interaction strengths between particle types and supports both custom and random interactions.
+**board.py:** Manages the Pygame window and rendering of particles.
 
 ## Performance Optimization
 
@@ -94,8 +108,9 @@ Particle movement (e.g., position updates, applying friction, and noise).
 Interaction forces (e.g., correct calculation of attraction/repulsion forces based on the interaction matrix).
 Particle system updates (e.g., ensuring that particles are correctly updated and that forces are applied properly).
 To run the tests:
-
+```
 python -m unittest discover tests/
+```
 
 ## Project Management
 
@@ -103,16 +118,9 @@ The project follows a modular approach, with separate classes handling distinct 
 
 ## Challenges & Lessons Learned
 
-**Handling Large Numbers of Particles:** A key challenge in this simulation was optimizing performance when simulating large particle counts. Implementing the KD-Tree for fast neighbor searches was crucial for ensuring the system remained performant as the number of particles grew.<br>
-**Tuning Interaction Strengths:** Defining a meaningful and balanced interaction matrix was another challenge. After experimenting with various values, we found that varying the interaction strengths allowed us to model different behaviors, like attraction and repulsion between different types of particles.<br>
-**Visualization with Pygame:** While Pygame was useful for visualization, managing the rendering loop to ensure smooth updates at a high frame rate was challenging. We used pygame.time.Clock() to limit the frame rate to 60 FPS, which kept the simulation responsive.<br>
-
-## Future Work
-
-**Improved Performance for Large Simulations:** While KD-Tree optimization improves performance, the simulation could still benefit from further optimization, especially when working with larger particle systems.<br>
-**Advanced Interaction Models:** Future versions could introduce more sophisticated interaction models, including additional forces or particle behaviors based on environmental factors (e.g., temperature or external fields).<br>
-**User Interface for Parameter Adjustments:** A graphical user interface (GUI) would allow users to dynamically adjust parameters like particle count, interaction strength, and simulation speed during runtime.<br>
-**Integration with Machine Learning:** It would be interesting to explore how machine learning algorithms could be used to model or predict particle behavior or interactions more accurately.
+**Handling Large Numbers of Particles:** A key challenge in this simulation was optimizing performance when simulating large particle counts. Implementing the KD-Tree for fast neighbor searches was crucial for ensuring the system remained performant as the number of particles grew.
+**Tuning Interaction Strengths:** Defining a meaningful and balanced interaction matrix was another challenge. After experimenting with various values, we found that varying the interaction strengths allowed us to model different behaviors, like attraction and repulsion between different types of particles.
+**Visualization with Pygame:** While Pygame was useful for visualization, managing the rendering loop to ensure smooth updates at a high frame rate was challenging. We used pygame.time.Clock() to limit the frame rate to 60 FPS, which kept the simulation responsive.
 
 ## Authors
 
