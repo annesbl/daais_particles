@@ -38,7 +38,7 @@ jobs:
       - name: Lint with Ruff
         run: |
           ruff --version  # Verifying installation first
-          ruff check ./tests 
+          ruff check ./tests --fix
 
       - name: Run tests with pytest
         run: |
