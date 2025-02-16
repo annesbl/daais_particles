@@ -6,10 +6,10 @@ A dynamic particle simulation demonstrating emergent behavior through biology-in
 
 # Table of Contents
 
-Overview
-Features
-Installation and Setup
-Code Structure
+- [Overview](#overview)
+- [Features](#features)
+- [Installation and Setup](#installation-and-setup)
+- [Code Structure](#code-structure)
 
 
 Overview
