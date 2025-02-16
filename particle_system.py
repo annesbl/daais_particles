@@ -55,7 +55,8 @@ class ParticleSystem:
         kdtree = KDTree.initialise_tree(particle_positions)
 
         # Use the Implementation class to update particles
-        self.particles = Implementation.update_particles(
+        impl = Implementation()
+        self.particles = impl.update_particles( 
             tree=kdtree,
             influence_range=influence_range,
             particles=self.particles,
