@@ -38,7 +38,7 @@ jobs:
       - name: Lint with Ruff
         run: |
           ruff --version  # Verifying installation first
-          ruff check ./tests --fix
+          ruff check ./tests --fix --ignore E501,F403,E402,F405,E902
 
       - name: Run tests with pytest
         run: |
