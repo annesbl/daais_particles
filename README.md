@@ -10,6 +10,7 @@ A dynamic particle simulation demonstrating emergent behavior through biology-in
 - [Features](#-🌟-features)
 - [Installation and Setup](#-🚀-installation-&-setup)
 - [Code Structure](#-🔧-code-structure)
+- [License](#license)
 
 
 ## Overview
@@ -89,6 +90,6 @@ Pygame must be installed to visualize particles.
 
 ---
 
-📜 License
+## 📜 License
 This project is open-source and available under the MIT License.
 
