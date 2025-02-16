@@ -60,18 +60,18 @@ if __name__ == "__main__":
     
     #Simulation parameters
     WIDTH, HEIGHT = 800, 600
-    PARTICLE_COUNT = 300
+    PARTICLE_COUNT = 1000
     PARTICLE_TYPES = ["A", "B", "C", "D"]
     
     custom_interactions = {
-        ("A", "B"): 0.0,
-        ("A", "C"): 0.0,
-        ("B", "C"): 0.0,
-        ("D", "A"): 0.0,
+        ("A", "B"): 20.0,
+        ("A", "C"): -44.0,
+        ("B", "C"): 8.0,
+        ("D", "A"): -33.0,
         ("A", "A"): -100.0,
-        ("B", "B"): 0.0,
-        ("C", "C"): 0.0,
-        ("D", "D"): 0.0,
+        ("B", "B"): 100.0,
+        ("C", "C"): 29.0,
+        ("D", "D"): -18.0,
     }
     interaction_matrix = InteractionMatrix(["A", "B", "C", "D"], custom_interactions)
 
