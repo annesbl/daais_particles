@@ -1,6 +1,6 @@
 import numpy as np
 from particles import Particle
-from interaction_class import KDTree, Implementation
+from interaction import KDTree, Implementation
 
 class ParticleSystem:
     def __init__(self, particle_count, boundary, types, interaction_matrix):
@@ -61,7 +61,7 @@ class ParticleSystem:
             particles=self.particles,
             interaction_matrix=self.interaction_matrix,
             sim_area=self.boundary,
-            friction=friction
+            friction=friction,
         )
 
         # Apply random noise to all particles

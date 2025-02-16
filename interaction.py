@@ -31,8 +31,10 @@ class Interactions():
         if distance == 0:
             return np.zeros_like(p1.position)
         # Get pull strength from the matrix
-        type_pair = (p1.particle_type, p2.particle_type)
-        strength = interaction_matrix.get(type_pair, 0)
+        # type_pair = (p1.particle_type, p2.particle_type)
+        # strength = interaction_matrix.get_interaction(type_pair, 0)
+        strength = interaction_matrix.get_interaction(p1.particle_type, p2.particle_type)  
+
         # Pull force decreases with distance (e.g., inverse square)
         force_magnitude = strength / (distance**2)
         direction = (p2.position - p1.position) / distance
@@ -47,12 +49,14 @@ class Interactions():
         if distance == 0 or distance > 1:  # Ignore if too far
             return np.zeros_like(p1.position)
         # Get push strength from the matrix
-        type_pair = (p1.particle_type, p2.particle_type)
-        strength = interaction_matrix.get(type_pair, 0)
+        # type_pair = (p1.particle_type, p2.particle_type)
+        # strength = interaction_matrix.get_interaction(type_pair, 0)
+        strength = interaction_matrix.get_interaction(p1.particle_type, p2.particle_type)  
         # Push force increases as particles get closer (e.g., inverse square)
         force_magnitude = -strength / (distance**2)
         direction = (p2.position - p1.position) / distance
         return force_magnitude * direction
+
 class Implementation():
     #find the nearest particles, calculate the forces and return updated placements
     def update_particles(tree, influence_range,  particles, interaction_matrix, sim_area, friction):
@@ -77,7 +81,7 @@ class Implementation():
             for idx in neighbors_idx:
                 if idx != i:  # Skip self-interaction
                     total_force += Interactions.total_force(
-                        particle, particles[idx], interaction_matrix, interaction_matrix
+                        particle, particles[idx], interaction_matrix, 
                     )
             
             # Apply force to velocity
