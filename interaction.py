@@ -16,59 +16,66 @@ class KDTree():
 
 
 class Interactions():
-  #calculates the total force between two particles
+  # Calculates the total force between two particles
     def total_force(p1, particles, interaction_matrix, tree, radius):
-      """
-        Calculate the total force between two particles, including push and pull components.
-        The forces depend on the particle types.
-        Parameters:
-        - p1, p2: Particles involved in the interaction.
-        - pull_matrix: Dict defining pull force strengths based on particle types.
-        - push_matrix: Dict defining push force strengths based on particle types.
-        Returns:
-        - total_force: Force vector acting on p1 due to p2.
         """
-        total_force = np.zeros_like(p1.position)
-        neighbors_idx = tree.query_ball_point(p1.position, radius)  # Nur Partikel im Radius
+        Calculate the total force between two particles, including both push and pull components.
+        The forces depend on the particle types.
+        
+        Parameters:
+        - p1: The particle for which the total force is being calculated.
+        - particles: The list of all particles in the system.
+        - interaction_matrix: A matrix that stores the interaction strengths between different particle types.
+        - tree: A cKDTree data structure that stores the particle positions for efficient neighbor searching.
+        - radius: The radius within which the particles affect each other.
+        
+        Returns:
+        - force: The force vector acting on p1 due to all neighboring particles within the specified radius.
+        """
+        # Initialize the total force as a zero vector
+        force = np.zeros_like(p1.position)
+        
+        # Get the indices of particles that are within the interaction radius of p1
+        neighbors_idx = tree.query_ball_point(p1.position, radius)  # Only particles within the radius
 
+        # Loop over all neighboring particles
         for idx in neighbors_idx:
             p2 = particles[idx]
-            if p1 is not p2:  # Keine Selbst-Interaktion
+            
+            # Skip the interaction with itself (no self-interaction)
+            if p1 is not p2:
+                # Calculate the vector from p1 to p2 and the distance between the particles
                 distance_vector = p2.position - p1.position
                 distance = np.linalg.norm(distance_vector)
 
-                # Übergabe von 'distance' zu den Methoden
-                total_force += Interactions.pull_force(p1, p2, interaction_matrix, distance_vector, distance)
-                total_force += Interactions.push_force(p1, p2, interaction_matrix, distance_vector, distance)
+                # Call the determine_force method to calculate the force between p1 and p2, 
+                # and add it to the total force acting on p1
+                force += Interactions.determine_force(p1, p2, interaction_matrix, distance_vector, distance)
 
-        return total_force
+        # Return the total force acting on p1
+        return force
 
 
-    ##the pull force between two particles
-    @jit(nopython=True)  # JIT compilation (no parallelization needed for this one)
-    def pull_force(p1, p2, interaction_matrix, distance_vector, distance):
+
+   ## Calculate the force between two particles
+    def determine_force(p1, p2, interaction_matrix, distance_vector, distance):
+        # If the distance between the particles is zero, return a zero vector (no force)
         if distance == 0:
             return np.zeros_like(p1.position)
 
-        type_pair = p1.particle_type , p2.particle_type
+        # Get the interaction strength between the two particle types from the interaction matrix
+        type_pair = p1.particle_type, p2.particle_type
         strength = interaction_matrix.get_interaction(type_pair)
+        
+        # Calculate the magnitude of the force based on the inverse square law (strength / distance^2)
         force_magnitude = strength / (distance ** 2)
+        
+        # Normalize the direction of the force (unit vector in the direction of the distance vector)
         direction = distance_vector / distance
+        
+        # Return the force as the magnitude times the direction
         return force_magnitude * direction
 
-    #the push force between two particles
-    @jit(nopython=True)  # JIT compilation (no parallelization needed for this one)
-    def push_force(p1, p2, interaction_matrix, distance_vector, distance):
-        if distance == 0 or distance > 1:  # Begrenzung der Push-Kraft
-
-            return np.zeros_like(p1.position)
-
-        type_pair = p1.particle_type , p2.particle_type
-        strength = interaction_matrix.get_interaction(type_pair)
-
-        force_magnitude = -strength / (distance ** 2)
-        direction = distance_vector / distance
-        return force_magnitude * direction
 
 class Implementation():
     #find the nearest particles, calculate the forces and return updated placements
